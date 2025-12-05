@@ -7,7 +7,7 @@
             "mathematical_execution": "Algebraic",
             "reflective_intuition": "Reflective"
         },
-        "overview": "You are The Architect—a deep thinker who builds solutions from first principles. You see the big picture before diving in, mapping out the entire solution path with symbolic relationships. Your strength lies in understanding why things work, not just how. You naturally question your results, checking for physical plausibility and logical consistency. You're the type who derives equations rather than memorizing them, and you're comfortable working abstractly before plugging in numbers. Your approach is methodical yet creative, combining theoretical understanding with careful validation."
+        "overview": "The Architect is a deep thinker who builds solutions from first principles. They see the big picture before diving in, mapping out the entire solution path with symbolic relationships. Their strength lies in understanding why things work, not just how. They naturally question their results, checking for physical plausibility and logical consistency. They are the type who derives equations rather than memorizing them, and they are comfortable working abstractly before plugging in numbers. Their approach is methodical yet creative, combining theoretical understanding with careful validation."
     },
     {
         "name": "The Visionary",
@@ -17,7 +17,7 @@
             "mathematical_execution": "Algebraic",
             "reflective_intuition": "Unreflective"
         },
-        "overview": "You are The Visionary—a conceptual thinker who sees elegant solutions from a bird's-eye view. You grasp the underlying physics principles and prefer working symbolically, seeing patterns and relationships that others might miss. You plan your approach holistically, thinking through the entire problem structure before executing. However, you sometimes move so quickly from concept to solution that you skip the crucial step of validating whether your answer makes physical sense. Your strength is in elegant theoretical reasoning, but you could benefit from pausing to check if your results are reasonable in the real world."
+        "overview": "The Visionary is a conceptual thinker who sees elegant solutions from a bird's-eye view. They grasp the underlying physics principles and prefer working symbolically, seeing patterns and relationships that others might miss. They plan their approach holistically, thinking through the entire problem structure before executing. However, they sometimes move so quickly from concept to solution that they skip the crucial step of validating whether their answer makes physical sense. Their strength is in elegant theoretical reasoning, but they could benefit from pausing to check if their results are reasonable in the real world."
     },
     {
         "name": "The Strategist",
@@ -27,7 +27,7 @@
             "mathematical_execution": "Numeric",
             "reflective_intuition": "Reflective"
         },
-        "overview": "You are The Strategist—a principled problem-solver who thinks ahead but works with concrete numbers. You understand the physics concepts deeply and plan your solution path from start to finish before beginning calculations. You prefer working with actual values rather than abstract symbols, which helps you stay grounded in reality. Your reflective nature means you regularly check your work, asking 'Does this number make sense?' Your approach combines big-picture thinking with careful numerical validation, making you reliable and thorough."
+        "overview": "The Strategist is a principled problem-solver who thinks ahead but works with concrete numbers. They understand the physics concepts deeply and plan their solution path from start to finish before beginning calculations. They prefer working with actual values rather than abstract symbols, which helps them stay grounded in reality. Their reflective nature means they regularly check their work, asking 'Does this number make sense?' Their approach combines big-picture thinking with careful numerical validation, making them reliable and thorough."
     },
     {
         "name": "The Pioneer",
@@ -37,7 +37,7 @@
             "mathematical_execution": "Numeric",
             "reflective_intuition": "Unreflective"
         },
-        "overview": "You are The Pioneer—a concept-driven explorer who maps out the full solution before diving into calculations. You understand the underlying physics principles and think strategically about the problem structure. You prefer working with concrete numbers rather than abstract symbols, which helps you stay connected to the physical reality. However, once you've calculated your answer, you tend to accept it without double-checking for plausibility. Your strength is in seeing the forest before examining the trees, but you could benefit from developing a habit of sanity-checking your final results."
+        "overview": "The Pioneer is a concept-driven explorer who maps out the full solution before diving into calculations. They understand the underlying physics principles and think strategically about the problem structure. They prefer working with concrete numbers rather than abstract symbols, which helps them stay connected to the physical reality. However, once they have calculated their answer, they tend to accept it without double-checking for plausibility. Their strength is in seeing the forest before examining the trees, but they could benefit from developing a habit of sanity-checking their final results."
     },
     {
         "name": "The Scholar",
@@ -47,7 +47,7 @@
             "mathematical_execution": "Algebraic",
             "reflective_intuition": "Reflective"
         },
-        "overview": "You are The Scholar—a methodical learner who builds understanding step-by-step from fundamental principles. You prefer working symbolically, deriving relationships rather than memorizing formulas, and you understand the 'why' behind each step. You work incrementally, carefully building up your solution piece by piece rather than planning the entire path upfront. Your reflective nature means you regularly pause to check your reasoning and validate your intermediate results. You're thorough and careful, preferring depth over speed, and you naturally question whether each step makes physical sense."
+        "overview": "The Scholar is a methodical learner who builds understanding step-by-step from fundamental principles. They prefer working symbolically, deriving relationships rather than memorizing formulas, and they understand the 'why' behind each step. They work incrementally, carefully building up their solution piece by piece rather than planning the entire path upfront. Their reflective nature means they regularly pause to check their reasoning and validate their intermediate results. They are thorough and careful, preferring depth over speed, and they naturally question whether each step makes physical sense."
     },
     {
         "name": "The Apprentice",
@@ -57,7 +57,7 @@
             "mathematical_execution": "Algebraic",
             "reflective_intuition": "Unreflective"
         },
-        "overview": "You are The Apprentice—a concept-focused learner who works step-by-step with symbolic relationships. You understand the underlying physics principles and prefer deriving equations rather than using memorized formulas. You work incrementally, building your solution piece by piece, and you're comfortable with abstract algebra. However, you sometimes accept your symbolic results without checking if they make physical sense when you eventually plug in numbers. Your strength is in understanding the theory, but you could benefit from developing a habit of validating your final answers against physical intuition."
+        "overview": "The Apprentice is a concept-focused learner who works step-by-step with symbolic relationships. They understand the underlying physics principles and prefer deriving equations rather than using memorized formulas. They work incrementally, building their solution piece by piece, and they are comfortable with abstract algebra. However, they sometimes accept their symbolic results without checking if they make physical sense when they eventually plug in numbers. Their strength is in understanding the theory, but they could benefit from developing a habit of validating their final answers against physical intuition."
     },
     {
         "name": "The Craftsman",
@@ -67,7 +67,7 @@
             "mathematical_execution": "Numeric",
             "reflective_intuition": "Reflective"
         },
-        "overview": "You are The Craftsman—a careful practitioner who understands the physics deeply and works methodically with concrete numbers. You build your solution step-by-step, preferring to work with actual values rather than abstract symbols. Your principled understanding means you know why each calculation matters, not just how to perform it. You're naturally reflective, regularly pausing to check if your numbers make sense and whether your approach is sound. You combine theoretical understanding with practical numerical work, making you thorough and reliable."
+        "overview": "The Craftsman is a careful practitioner who understands the physics deeply and works methodically with concrete numbers. They build their solution step-by-step, preferring to work with actual values rather than abstract symbols. Their principled understanding means they know why each calculation matters, not just how to perform it. They are naturally reflective, regularly pausing to check if their numbers make sense and whether their approach is sound. They combine theoretical understanding with practical numerical work, making them thorough and reliable."
     },
     {
         "name": "The Experimenter",
@@ -77,7 +77,7 @@
             "mathematical_execution": "Numeric",
             "reflective_intuition": "Unreflective"
         },
-        "overview": "You are The Experimenter—a hands-on learner who understands the physics principles and works step-by-step with concrete numbers. You prefer working with actual values rather than abstract symbols, which helps you stay grounded in physical reality. You build your solution incrementally, understanding why each step matters. However, you sometimes accept your calculated results without pausing to check if they're physically reasonable. Your strength is in connecting theory to practice, but you could benefit from developing a habit of validating your answers before moving on."
+        "overview": "The Experimenter is a hands-on learner who understands the physics principles and works step-by-step with concrete numbers. They prefer working with actual values rather than abstract symbols, which helps them stay grounded in physical reality. They build their solution incrementally, understanding why each step matters. However, they sometimes accept their calculated results without pausing to check if they are physically reasonable. Their strength is in connecting theory to practice, but they could benefit from developing a habit of validating their answers before moving on."
     },
     {
         "name": "The Engineer",
@@ -87,7 +87,7 @@
             "mathematical_execution": "Algebraic",
             "reflective_intuition": "Reflective"
         },
-        "overview": "You are The Engineer—a systematic problem-solver who plans the full solution path using established equations and methods. You think globally, mapping out the entire approach before executing, and you're comfortable working symbolically with formulas. While you rely on known equations rather than deriving from first principles, you use them thoughtfully and strategically. Your reflective nature means you check your work carefully, validating that your symbolic manipulations lead to physically reasonable results. You combine formulaic efficiency with careful validation, making you both practical and reliable."
+        "overview": "The Engineer is a systematic problem-solver who plans the full solution path using established equations and methods. They think globally, mapping out the entire approach before executing, and they are comfortable working symbolically with formulas. While they rely on known equations rather than deriving from first principles, they use them thoughtfully and strategically. Their reflective nature means they check their work carefully, validating that their symbolic manipulations lead to physically reasonable results. They combine formulaic efficiency with careful validation, making them both practical and reliable."
     },
     {
         "name": "The Executor",
@@ -97,7 +97,7 @@
             "mathematical_execution": "Algebraic",
             "reflective_intuition": "Unreflective"
         },
-        "overview": "You are The Executor—a formula-driven problem-solver who sees the big picture and works efficiently with symbolic equations. You plan your solution path from start to finish, using established formulas and methods rather than deriving from first principles. You're comfortable with abstract algebra and can work through complex symbolic manipulations. However, you sometimes accept your final symbolic results without checking if they make physical sense when applied. Your strength is in efficient, systematic problem-solving, but you could benefit from developing a habit of validating your answers against physical intuition."
+        "overview": "The Executor is a formula-driven problem-solver who sees the big picture and works efficiently with symbolic equations. They plan their solution path from start to finish, using established formulas and methods rather than deriving from first principles. They are comfortable with abstract algebra and can work through complex symbolic manipulations. However, they sometimes accept their final symbolic results without checking if they make physical sense when applied. Their strength is in efficient, systematic problem-solving, but they could benefit from developing a habit of validating their answers against physical intuition."
     },
     {
         "name": "The Planner",
@@ -107,7 +107,7 @@
             "mathematical_execution": "Numeric",
             "reflective_intuition": "Reflective"
         },
-        "overview": "You are The Planner—a methodical problem-solver who maps out the full solution using established equations and concrete numbers. You think strategically, planning your entire approach before beginning calculations, and you prefer working with actual values rather than abstract symbols. You rely on known formulas rather than deriving from first principles, but you use them thoughtfully and systematically. Your reflective nature means you regularly check your work, ensuring your calculated results are reasonable. You combine formulaic efficiency with careful validation, making you both practical and thorough."
+        "overview": "The Planner is a methodical problem-solver who maps out the full solution using established equations and concrete numbers. They think strategically, planning their entire approach before beginning calculations, and they prefer working with actual values rather than abstract symbols. They rely on known formulas rather than deriving from first principles, but they use them thoughtfully and systematically. Their reflective nature means they regularly check their work, ensuring their calculated results are reasonable. They combine formulaic efficiency with careful validation, making them both practical and thorough."
     },
     {
         "name": "The Automator",
@@ -117,7 +117,7 @@
             "mathematical_execution": "Numeric",
             "reflective_intuition": "Unreflective"
         },
-        "overview": "You are The Automator—an efficient problem-solver who plans the full solution path and executes it systematically with numbers. You think globally, mapping out your entire approach before beginning, and you prefer working with concrete values rather than abstract symbols. You rely on established formulas and methods, which allows you to work quickly and efficiently. However, you sometimes accept your calculated results without pausing to check if they're physically reasonable. Your strength is in systematic, efficient problem-solving, but you could benefit from developing a habit of validating your answers before considering the problem solved."
+        "overview": "The Automator is an efficient problem-solver who plans the full solution path and executes it systematically with numbers. They think globally, mapping out their entire approach before beginning, and they prefer working with concrete values rather than abstract symbols. They rely on established formulas and methods, which allows them to work quickly and efficiently. However, they sometimes accept their calculated results without pausing to check if they are physically reasonable. Their strength is in systematic, efficient problem-solving, but they could benefit from developing a habit of validating their answers before considering the problem solved."
     },
     {
         "name": "The Specialist",
@@ -127,7 +127,7 @@
             "mathematical_execution": "Algebraic",
             "reflective_intuition": "Reflective"
         },
-        "overview": "You are The Specialist—a careful problem-solver who works step-by-step using established equations and symbolic methods. You build your solution incrementally, applying known formulas methodically rather than deriving from first principles. You're comfortable working symbolically, manipulating equations before plugging in numbers. Your reflective nature means you regularly pause to check your work, validating that your symbolic manipulations are correct and that your results make sense. You combine formulaic efficiency with careful validation, making you thorough and reliable."
+        "overview": "The Specialist is a careful problem-solver who works step-by-step using established equations and symbolic methods. They build their solution incrementally, applying known formulas methodically rather than deriving from first principles. They are comfortable working symbolically, manipulating equations before plugging in numbers. Their reflective nature means they regularly pause to check their work, validating that their symbolic manipulations are correct and that their results make sense. They combine formulaic efficiency with careful validation, making them thorough and reliable."
     },
     {
         "name": "The Mechanic",
@@ -137,7 +137,7 @@
             "mathematical_execution": "Algebraic",
             "reflective_intuition": "Unreflective"
         },
-        "overview": "You are The Mechanic—a formula-driven problem-solver who works step-by-step with symbolic equations. You build your solution incrementally, applying established formulas methodically rather than deriving from first principles. You're comfortable with abstract algebra and can work through symbolic manipulations efficiently. However, you sometimes accept your symbolic results without checking if they make physical sense when you eventually plug in numbers. Your strength is in systematic, formulaic problem-solving, but you could benefit from developing a habit of validating your final answers against physical intuition."
+        "overview": "The Mechanic is a formula-driven problem-solver who works step-by-step with symbolic equations. They build their solution incrementally, applying established formulas methodically rather than deriving from first principles. They are comfortable with abstract algebra and can work through symbolic manipulations efficiently. However, they sometimes accept their symbolic results without checking if they make physical sense when they eventually plug in numbers. Their strength is in systematic, formulaic problem-solving, but they could benefit from developing a habit of validating their final answers against physical intuition."
     },
     {
         "name": "The Implementer",
@@ -147,7 +147,7 @@
             "mathematical_execution": "Numeric",
             "reflective_intuition": "Reflective"
         },
-        "overview": "You are The Implementer—a methodical problem-solver who works step-by-step with established equations and concrete numbers. You build your solution incrementally, applying known formulas carefully and working with actual values rather than abstract symbols. You rely on established methods rather than deriving from first principles, but you use them thoughtfully. Your reflective nature means you regularly check your work, ensuring your calculated results are reasonable. You combine formulaic efficiency with careful validation, making you both practical and thorough."
+        "overview": "The Implementer is a methodical problem-solver who works step-by-step with established equations and concrete numbers. They build their solution incrementally, applying known formulas carefully and working with actual values rather than abstract symbols. They rely on established methods rather than deriving from first principles, but they use them thoughtfully. Their reflective nature means they regularly check their work, ensuring their calculated results are reasonable. They combine formulaic efficiency with careful validation, making them both practical and thorough."
     },
     {
         "name": "The Doer",
@@ -157,7 +157,7 @@
             "mathematical_execution": "Numeric",
             "reflective_intuition": "Unreflective"
         },
-        "overview": "You are The Doer—an action-oriented problem-solver who works step-by-step with established equations and concrete numbers. You build your solution incrementally, applying known formulas and working with actual values. You rely on established methods rather than deriving from first principles, which allows you to work efficiently. However, you sometimes accept your calculated results without pausing to check if they're physically reasonable. Your strength is in getting things done systematically, but you could benefit from developing a habit of validating your answers before considering the problem solved."
+        "overview": "The Doer is an action-oriented problem-solver who works step-by-step with established equations and concrete numbers. They build their solution incrementally, applying known formulas and working with actual values. They rely on established methods rather than deriving from first principles, which allows them to work efficiently. However, they sometimes accept their calculated results without pausing to check if they are physically reasonable. Their strength is in getting things done systematically, but they could benefit from developing a habit of validating their answers before considering the problem solved."
     }
 ]
 
