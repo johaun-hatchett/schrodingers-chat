@@ -1,0 +1,62 @@
+[
+    {
+        "criterion": "Conceptual Foundation",
+        "measures": "Knowledge of physical laws.",
+        "intervention": "Review of core concepts.",
+        "endpoints": [
+            {
+                "label": "Principled",
+                "description": "Concept-focused"
+            },
+            {
+                "label": "Formulaic",
+                "description": "Equation-focused"
+            }
+        ]
+    },
+    {
+        "criterion": "Strategic Insight",
+        "measures": "Ability to structure a solution.",
+        "intervention": "Practice symbolic manipulation.",
+        "endpoints": [
+            {
+                "label": "Global",
+                "description": "Outlines full path"
+            },
+            {
+                "label": "Local",
+                "description": "Step-by-step"
+            }
+        ]
+    },
+    {
+        "criterion": "Mathematical Execution",
+        "measures": "Algebra, equation setup, units.",
+        "intervention": "Lessons on problem decomposition.",
+        "endpoints": [
+            {
+                "label": "Algebraic",
+                "description": "Symbolic"
+            },
+            {
+                "label": "Numeric",
+                "description": "Arithmetic"
+            }
+        ]
+    },
+    {
+        "criterion": "Reflective Intuition",
+        "measures": "Metacognition, error detection.",
+        "intervention": "Self-assessment training.",
+        "endpoints": [
+            {
+                "label": "Reflective",
+                "description": "Checks plausibility"
+            },
+            {
+                "label": "Unreflective",
+                "description": "Accepts final result"
+            }
+        ]
+    }
+]
