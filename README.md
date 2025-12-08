@@ -1,4 +1,4 @@
-# Schrodinger's Chat: A Text-Based Educational Game Engine
+# Schrödinger's Chat: A Text-Based Educational Game Engine
 
 Schrödinger's Chat is a text-based educational game where users interact with an AI gamemaster to solve physics problems. The project is designed to not only help users find the correct answer but also to analyze their problem-solving approach and provide personalized feedback.
 
@@ -64,6 +64,6 @@ The core of Schrödinger's Chat is its ability to analyze a user's problem-solvi
 
 By analyzing the user's interactions, the system can identify their dominant archetype and provide feedback to help them become a more effective problem-solver.
 
-## Contributing
+---
 
-Contributions are welcome! If you have any ideas for new features, bug fixes, or improvements, please open an issue or submit a pull request.
+README generated with Gemini 2.5, edited by Johaun Hatchett
