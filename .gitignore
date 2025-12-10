@@ -8,3 +8,4 @@ __pycache__/
 *.sqlite
 *.DS_Store
 README_DEPLOYMENT.md
+static/assets/icon.png
