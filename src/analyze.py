@@ -67,48 +67,82 @@ def load_transcript(path: Path) -> Transcript:
     return Transcript(messages)
 
 
-def summarize_problem_solving(transcript: Transcript, model: str = "gpt-4o-mini") -> str:
-    """Use an LLM to summarize the student's problem solving/critical thinking.
-    
-    Returns student-facing feedback with just the archetype codename (not the full overview).
-    """
-    archetypes = load_archetypes()
-    
-    # Build archetype reference text (just names and dimensions for student-facing output)
-    archetype_text = ""
-    if archetypes:
-        archetype_text = "\n\n**Problem-Solving Archetypes (for identification only):**\n"
-        archetype_text += "Based on the four dimensions, identify which archetype codename best matches the student:\n\n"
-        for arch in archetypes:
-            dims = arch["dimensions"]
-            archetype_text += f"- **{arch['name']}**: {dims['conceptual_foundation']} / {dims['strategic_insight']} / {dims['mathematical_execution']} / {dims['reflective_intuition']}\n"
-    
+def generate_likert_scores(transcript: Transcript, model: str = "gpt-4o-mini") -> list[dict]:
+    """Generate value-neutral Likert scores (-2..+2) for the four dimensions."""
+    prompt = """
+You are an expert physics educator. Score the student on four dimensions using a balanced, value-neutral Likert scale from -2 to +2, where -2 is the first endpoint, +2 is the second endpoint, and 0 is balanced/mixed. Return JSON only.
+
+Dimensions (in order):
+1) Conceptual Foundation — low: Principled (concept-focused), high: Formulaic (equation-focused)
+2) Strategic Insight — low: Global (outlines full path), high: Local (step-by-step)
+3) Mathematical Execution — low: Algebraic (symbolic), high: Numeric (arithmetic)
+4) Reflective Intuition — low: Reflective (checks plausibility), high: Unreflective (accepts result)
+
+Return exactly:
+{
+  "dimensions": [
+    {"name": "Conceptual Foundation", "scale": <int -2..2>, "low_label": "Principled", "high_label": "Formulaic", "rationale": "<1-2 sentences>"},
+    {"name": "Strategic Insight", "scale": <int -2..2>, "low_label": "Global", "high_label": "Local", "rationale": "<1-2 sentences>"},
+    {"name": "Mathematical Execution", "scale": <int -2..2>, "low_label": "Algebraic", "high_label": "Numeric", "rationale": "<1-2 sentences>"},
+    {"name": "Reflective Intuition", "scale": <int -2..2>, "low_label": "Reflective", "high_label": "Unreflective", "rationale": "<1-2 sentences>"}
+  ]
+}
+No prose outside the JSON. Do not change labels. Keep dimensions in this order.
+"""
+    llm = GPT(model=model)
+    ai_msg = llm.generate_response(prompt, transcript=transcript)
+
+    try:
+        payload = json.loads(ai_msg.content)
+        dims = payload.get("dimensions", [])
+        if not isinstance(dims, list):
+            raise ValueError("dimensions not a list")
+        return dims
+    except (json.JSONDecodeError, ValueError, TypeError) as exc:
+        raise LLMException(f"Failed to parse Likert scores JSON: {exc}") from exc
+
+
+def summarize_problem_solving(
+    transcript: Transcript,
+    model: str = "gpt-4o-mini",
+    scores: list[dict] | None = None,
+) -> str:
+    """Generate student-facing feedback with Likert (-2..+2) scores per dimension."""
+
+    scores = scores or generate_likert_scores(transcript, model=model)
+    score_lines = "\n".join(
+        [
+            f"- {s.get('name')}: scale {s.get('scale')} (low='{s.get('low_label')}', high='{s.get('high_label')}'). Rationale: {s.get('rationale', '')}"
+            for s in scores
+        ]
+    )
+
     prompt = f"""
 You are an expert physics educator and learning scientist.
 You will see a full transcript of an interaction between a **student** (role: user/human)
 and an **AI tutor** (role: assistant/ai) working on a physics problem.
 
-Your task is to write **brief, supportive, student-facing feedback** that helps the student understand their problem-solving and critical-thinking approach and how to improve it.
+Your task is to write **brief, supportive, student-facing feedback** that helps the student understand their problem-solving and critical-thinking approach and how to improve it. Do NOT assign archetypes.
 
-**Personality Rubric Framework:**
-Assess the student along these four dimensions (each has two endpoints):
+**Problem-Solving Lens (value-neutral):**
+Assess the student along these four dimensions using a balanced Likert scale from -2 to +2, where -2 is the first endpoint, +2 is the second endpoint, and 0 is balanced/mixed:
 
 1. **Conceptual Foundation**: 
-   - Principled (Concept-focused) vs Formulaic (Equation-focused)
+   - Principled (Concept-focused) ↔ Formulaic (Equation-focused)
    - Does the student understand the underlying physics concepts, or do they rely primarily on memorized equations?
 
 2. **Strategic Insight**: 
-   - Global (Outlines full path) vs Local (Step-by-step)
+   - Global (Outlines full path) ↔ Local (Step-by-step)
    - Does the student plan ahead and see the big picture, or do they work incrementally without a clear overall strategy?
 
 3. **Mathematical Execution**: 
-   - Algebraic (Symbolic) vs Numeric (Arithmetic)
+   - Algebraic (Symbolic) ↔ Numeric (Arithmetic)
    - Does the student work with symbols and general relationships, or do they jump to plugging in numbers?
 
 4. **Reflective Intuition**: 
-   - Reflective (Checks plausibility) vs Unreflective (Accepts final result)
+   - Reflective (Checks plausibility) ↔ Unreflective (Accepts final result)
    - Does the student question their answers and check if they make sense, or do they accept results without validation?
-{archetype_text}
+
 Focus on:
 - How the student approached understanding the problem and gathering information.
 - How they reasoned through the physics concepts and equations.
@@ -120,20 +154,23 @@ Be specific, kind, and actionable. Avoid jargon where possible.
 
 Structure your response in this format:
 
-### Your problem-solving personality
-Simply state the archetype codename that best matches the student (e.g., "Your problem-solving personality: **The Architect**" or "Your problem-solving personality: **The Craftsman**"). Do NOT include the full overview paragraph—just the codename.
+### Summary of your approach
+4-5 sentences summarizing how you tackled the problem and how your thinking evolved. Include both strengths and areas for growth in this summary.
 
-### Overall approach
-2-4 sentences summarizing how you tackled the problem and how your thinking evolved.
-
-### Strengths to keep building on
-- 2-4 bullet points highlighting concrete strengths in your reasoning, strategies, or persistence.
-
-### Opportunities to grow your problem-solving
-- 2-4 bullet points pointing out specific habits or ideas to refine, phrased constructively.
+### Deep dive: how you showed up on the four dimensions
+For each dimension, write 2-3 sentences in second person (addressing the student as "you") describing where they landed qualitatively (e.g., "You leaned toward a principled approach" or "You worked more locally, step-by-step"). Do NOT mention the numeric scale value (-2..+2) in the text. Focus on the qualitative description of their approach with specific evidence from the transcript. Write each dimension description as a complete sentence starting with the dimension name, not as a bullet point. Always use "you" and "your" throughout.
+Conceptual Foundation: 2-3 sentences in second person describing the qualitative tendency (principled vs formulaic) with specific examples from the transcript.
+Strategic Insight: 2-3 sentences in second person describing the qualitative tendency (global vs local) with specific examples from the transcript.
+Mathematical Execution: 2-3 sentences in second person describing the qualitative tendency (algebraic vs numeric) with specific examples from the transcript.
+Reflective Intuition: 2-3 sentences in second person describing the qualitative tendency (reflective vs unreflective) with specific examples from the transcript.
 
 ### Suggested next practice steps
-- 2-4 very concrete suggestions for what you could practice next (e.g., kinds of problems, specific strategies to rehearse, or reflection prompts), tied to what happened in this transcript.
+Begin with a lead-in sentence that ties the next steps to what was observed in this session. Then provide 2-4 very concrete suggestions for what you could practice next (e.g., kinds of problems, specific strategies to rehearse, or reflection prompts), tied to what happened in this transcript.
+
+Use the precomputed Likert scores below for consistency across views; do not change them. Align your text descriptions to these values:
+{score_lines}
+
+Do not include any JSON in the output. Neither endpoint is “better”—just describe the tendency observed.
 """
 
     llm = GPT(model=model)
@@ -141,58 +178,52 @@ Simply state the archetype codename that best matches the student (e.g., "Your p
     return ai_msg.content
 
 
-def get_tutor_insights(transcript: Transcript, model: str = "gpt-4o-mini") -> str:
-    """Generate tutor-facing insights with full archetype overviews.
-    
-    Returns a summary that includes the archetype name and full overview paragraph
-    to help tutors understand students at a high level.
-    """
-    archetypes = load_archetypes()
-    
-    # Build archetype reference text with full overviews for tutors
-    archetype_text = ""
-    if archetypes:
-        archetype_text = "\n\n**Problem-Solving Archetypes (with full overviews):**\n"
-        for arch in archetypes:
-            dims = arch["dimensions"]
-            archetype_text += f"- **{arch['name']}**: {dims['conceptual_foundation']} / {dims['strategic_insight']} / {dims['mathematical_execution']} / {dims['reflective_intuition']}\n"
-            archetype_text += f"  {arch['overview']}\n\n"
-    
+def get_tutor_insights(
+    transcript: Transcript,
+    model: str = "gpt-4o-mini",
+    scores: list[dict] | None = None,
+) -> str:
+    """Generate tutor-facing insights with Likert (-2..+2) scores per dimension."""
+
+    scores = scores or generate_likert_scores(transcript, model=model)
+    score_lines = "\n".join(
+        [
+            f"- {s.get('name')}: scale {s.get('scale')} (low='{s.get('low_label')}', high='{s.get('high_label')}'). Rationale: {s.get('rationale', '')}"
+            for s in scores
+        ]
+    )
+
     prompt = f"""
 You are an expert physics educator analyzing a tutoring session transcript.
 You will see a full transcript of an interaction between a **student** (role: user/human)
 and an **AI tutor** (role: assistant/ai) working on a physics problem.
 
-Your task is to provide **tutor-facing insights** that help the tutor understand this student's problem-solving approach at a high level.
+Provide **tutor-facing insights** across the four dimensions below, using a balanced Likert scale from -2 to +2 (value-neutral: -2 = first endpoint, +2 = second endpoint, 0 = balanced/mixed). Do not assign archetype labels.
 
-**Personality Rubric Framework:**
-Assess the student along these four dimensions (each has two endpoints):
-
-1. **Conceptual Foundation**: 
-   - Principled (Concept-focused) vs Formulaic (Equation-focused)
-
-2. **Strategic Insight**: 
-   - Global (Outlines full path) vs Local (Step-by-step)
-
-3. **Mathematical Execution**: 
-   - Algebraic (Symbolic) vs Numeric (Arithmetic)
-
-4. **Reflective Intuition**: 
-   - Reflective (Checks plausibility) vs Unreflective (Accepts final result)
-{archetype_text}
-Based on the transcript, identify which archetype best matches this student and provide the full archetype overview.
-This will help the tutor understand the student's learning style and adapt their teaching approach accordingly.
+**Four-dimension rubric (value-neutral):**
+1) Conceptual Foundation — Principled (concept-focused) ↔ Formulaic (equation-focused)
+2) Strategic Insight — Global (outlines full path) ↔ Local (step-by-step)
+3) Mathematical Execution — Algebraic (symbolic) ↔ Numeric (arithmetic)
+4) Reflective Intuition — Reflective (checks plausibility) ↔ Unreflective (accepts result)
 
 Structure your response as:
 
-### Student Archetype
-[Archetype name, e.g., "The Architect"]
+### Four-dimension snapshot
+- Conceptual Foundation: placement with evidence and the -2..+2 value.
+- Strategic Insight: placement with evidence and the -2..+2 value.
+- Mathematical Execution: placement with evidence and the -2..+2 value.
+- Reflective Intuition: placement with evidence and the -2..+2 value.
 
-### Archetype Overview
-[The full overview paragraph from the archetype definition above]
+### Key observations from this session
+- 2-4 bullets on notable behaviors, misconceptions, or turning points.
 
-### Key Observations from This Session
-- 2-3 bullet points highlighting specific behaviors or patterns observed in this transcript that align with or deviate from the archetype.
+### Suggested tutor moves
+- 2-4 bullets on targeted interventions or scaffolds to try next time, tied to the observed dimensions.
+
+Use the precomputed Likert scores below for consistency across views; do not change them. Align your text descriptions to these values:
+{score_lines}
+
+Do not include any JSON in the output. Neither endpoint is “better”—just describe the tendency observed.
 """
 
     llm = GPT(model=model)

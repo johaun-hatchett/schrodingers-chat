@@ -1,4 +1,4 @@
-# Schrödinger's Chat: A Text-Based Educational Game Engine
+# 🐈‍⬛ Schrödinger's Chat: A Text-Based Educational Game Engine
 
 Schrödinger's Chat is a text-based educational game where users interact with an AI gamemaster to solve physics problems. The project is designed to not only help users find the correct answer but also to analyze their problem-solving approach and provide personalized feedback.
 
@@ -34,7 +34,7 @@ This will open a new tab in your browser with the Schrödinger's Chat interface.
 To run the game in your terminal, execute the following command:
 
 ```bash
-python3 src/main.py
+python3 src/cli.py
 ```
 
 ## Project Structure
@@ -45,12 +45,14 @@ The project is organized into the following directories:
     *   `archetypes.json`: Defines 16 different problem-solving archetypes based on four dimensions of problem-solving.
     *   `rubric.json`: Defines the criteria and endpoints for each dimension of the problem-solving rubric.
 *   `src/`: Contains the Python source code for the application.
-    *   `main.py`: The main entry point for the command-line interface.
+    *   `cli.py`: The command-line interface entry point.
     *   `app.py`: The entry point for the Streamlit web application.
+    *   `game.py`: Core game logic including GameState and answer validation.
     *   `environments.py`: Defines the different physics problem environments.
     *   `llm.py`: Handles communication with the language model.
     *   `messages.py`: Defines the data structures for messages in the conversation.
     *   `analyze.py`: Contains the logic for analyzing the user's problem-solving approach.
+    *   `database.py`: Handles user authentication and session storage.
 *   `outputs/`: Contains the output of the application, such as conversation transcripts.
 
 ## Problem-Solving Archetypes
