@@ -22,5 +22,5 @@ ENV PYTHONPATH=/app
 EXPOSE 7860
 
 # Run Flask app
-CMD ["python", "src/app_flask.py"]
+CMD ["python", "src/app.py"]
 
