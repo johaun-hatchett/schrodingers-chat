@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.db
+*.sqlite
+*.DS_Store
+README_DEPLOYMENT.md

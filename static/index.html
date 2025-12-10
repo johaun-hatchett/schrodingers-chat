@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schrödinger's Chat</title>
+    <link rel="icon" type="image/png" href="assets/icon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h1><img src="assets/icon.png" alt="Schrödinger's Chat" class="app-icon"> Schrödinger's Chat</h1>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="login">Login</button>
+                <button class="tab-button" data-tab="signup">Sign Up</button>
+            </div>
+            
+            <div id="loginTab" class="tab-content active">
+                <form id="loginForm">
+                    <input type="text" id="loginUsername" placeholder="Username" required>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <button type="submit" class="btn-primary">Login</button>
+                    <div id="loginError" class="error-message"></div>
+                </form>
+            </div>
+            
+            <div id="signupTab" class="tab-content">
+                <form id="signupForm">
+                    <input type="text" id="signupUsername" placeholder="Username" required>
+                    <input type="password" id="signupPassword" placeholder="Password" required>
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                    <button type="submit" class="btn-primary">Sign Up</button>
+                    <div id="signupError" class="error-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" class="hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><img src="assets/icon.png" alt="Schrödinger's Chat" class="app-icon"> Schrödinger's Chat</h1>
+                <div class="header-actions">
+                    <span id="usernameDisplay"></span>
+                    <button id="logoutBtn" class="btn-secondary">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <button class="nav-button active" data-view="game">New Game</button>
+            <button class="nav-button" data-view="sessions">Past Sessions</button>
+            <button id="adminNav" class="nav-button hidden" data-view="admin">Admin</button>
+        </nav>
+
+        <!-- Game View -->
+        <div id="gameView" class="view active">
+            <div class="sidebar">
+                <h3>Game Controls</h3>
+                <div class="control-group">
+                    <label class="toggle-label">
+                        <span class="toggle-text">⚡ Answer fast</span>
+                        <input type="checkbox" id="fastModel" class="toggle-input">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="control-group">
+                    <label>Problem Type:</label>
+                    <select id="problemType" disabled>
+                        <option value="block_on_incline">Block on Incline</option>
+                        <option value="pendulum">Pendulum</option>
+                        <option value="projectile_motion">Projectile Motion</option>
+                        <option value="rocket_equation">Rocket Equation</option>
+                    </select>
+                </div>
+                <button id="startGameBtn" class="btn-primary">Start Game</button>
+                <button id="resetGameBtn" class="btn-secondary hidden">Reset Game</button>
+            </div>
+
+            <div class="main-content">
+                <div id="problemDescription" class="problem-description hidden"></div>
+                
+                <div id="chatContainer" class="chat-container">
+                    <div id="messages" class="messages"></div>
+                    <div id="chatInputContainer" class="chat-input-container hidden">
+                        <input type="text" id="chatInput" placeholder="Describe your actions (e.g., 'measure mass', 'what are the forces?')" />
+                        <button id="sendBtn" class="btn-primary">Send</button>
+                    </div>
+                </div>
+
+                <div id="summarySection" class="summary-section hidden">
+                    <div class="summary-tabs">
+                        <button class="summary-tab-button active" data-tab="chat">Chat</button>
+                        <button class="summary-tab-button" data-tab="approach">Summary of Your Approach</button>
+                        <button class="summary-tab-button" data-tab="dimensions">Deep Dive</button>
+                        <button class="summary-tab-button" data-tab="nextsteps">Next Steps</button>
+                    </div>
+                    <div class="summary-tab-content active" id="summaryTab-chat">
+                        <div id="chatContainerSummary" class="chat-container">
+                            <div id="messagesSummary" class="messages"></div>
+                        </div>
+                    </div>
+                    <div class="summary-tab-content" id="summaryTab-approach"></div>
+                    <div class="summary-tab-content" id="summaryTab-dimensions"></div>
+                    <div class="summary-tab-content" id="summaryTab-nextsteps"></div>
+                    <button id="newGameBtn" class="btn-primary">Start New Game</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sessions View -->
+        <div id="sessionsView" class="view">
+            <h2>Your Past Sessions</h2>
+            <div id="sessionsList" class="sessions-list"></div>
+            <div id="sessionDetail" class="session-detail hidden">
+                <button id="backToSessions" class="btn-secondary">← Back to Sessions</button>
+                <div id="sessionInfo"></div>
+                <div class="summary-section">
+                    <h2>Problem-solving summary</h2>
+                    <div class="summary-tabs">
+                        <button class="summary-tab-button active" data-tab="chat" data-context="session">Chat</button>
+                        <button class="summary-tab-button" data-tab="approach" data-context="session">Summary of Your Approach</button>
+                        <button class="summary-tab-button" data-tab="dimensions" data-context="session">Deep Dive</button>
+                        <button class="summary-tab-button" data-tab="nextsteps" data-context="session">Next Steps</button>
+                    </div>
+                    <div class="summary-tab-content active" id="sessionTab-chat">
+                        <div class="chat-container" style="height: 500px;">
+                            <div id="sessionMessages" class="messages"></div>
+                        </div>
+                    </div>
+                    <div class="summary-tab-content" id="sessionTab-approach"></div>
+                    <div class="summary-tab-content" id="sessionTab-dimensions"></div>
+                    <div class="summary-tab-content" id="sessionTab-nextsteps"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin View -->
+        <div id="adminView" class="view">
+            <h2>Admin View</h2>
+            <div id="adminSessionsList" class="sessions-list"></div>
+            <div id="adminSessionDetail" class="session-detail hidden">
+                <button id="backToAdminSessions" class="btn-secondary">← Back to Sessions</button>
+                <div id="adminSessionInfo"></div>
+                <div class="summary-section">
+                    <h2>Problem-solving summary</h2>
+                    <div class="summary-tabs">
+                        <button class="summary-tab-button active" data-tab="chat" data-context="admin">Chat</button>
+                        <button class="summary-tab-button" data-tab="approach" data-context="admin">Summary of Your Approach</button>
+                        <button class="summary-tab-button" data-tab="dimensions" data-context="admin">Deep Dive</button>
+                        <button class="summary-tab-button" data-tab="nextsteps" data-context="admin">Next Steps</button>
+                    </div>
+                    <div class="summary-tab-content active" id="adminSessionTab-chat">
+                        <div class="chat-container" style="height: 500px;">
+                            <div id="adminSessionMessages" class="messages"></div>
+                        </div>
+                    </div>
+                    <div class="summary-tab-content" id="adminSessionTab-approach"></div>
+                    <div class="summary-tab-content" id="adminSessionTab-dimensions"></div>
+                    <div class="summary-tab-content" id="adminSessionTab-nextsteps"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+
