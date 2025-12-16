@@ -9,3 +9,4 @@ __pycache__/
 *.DS_Store
 README_DEPLOYMENT.md
 static/assets/icon.png
+manuscript/

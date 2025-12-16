@@ -259,8 +259,15 @@ function switchSummaryTab(tab, context = 'summary') {
     
     if (container) {
         container.querySelectorAll('.summary-tab-button').forEach(btn => {
-            if (btn.dataset.context === context) {
+            // For main summary section, buttons don't have data-context attribute
+            // For session/admin, buttons have data-context attribute
+            const btnContext = btn.dataset.context || 'summary';
+            if (btnContext === context) {
+                // Set active state: true if this button's tab matches, false otherwise
                 btn.classList.toggle('active', btn.dataset.tab === tab);
+            } else {
+                // Remove active from buttons in other contexts
+                btn.classList.remove('active');
             }
         });
     }
@@ -269,8 +276,37 @@ function switchSummaryTab(tab, context = 'summary') {
         contentContainer.querySelectorAll('.summary-tab-content').forEach(content => {
             if (content.id.startsWith(prefix)) {
                 content.classList.toggle('active', content.id === `${prefix}-${tab}`);
+            } else {
+                content.classList.remove('active');
             }
         });
+    }
+}
+
+function showTypingIndicator() {
+    const messagesDiv = document.getElementById('messages');
+    const typingDiv = document.createElement('div');
+    typingDiv.id = 'typingIndicator';
+    typingDiv.className = 'typing-indicator';
+    
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'message-content';
+    
+    for (let i = 0; i < 3; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'typing-dot';
+        contentDiv.appendChild(dot);
+    }
+    
+    typingDiv.appendChild(contentDiv);
+    messagesDiv.appendChild(typingDiv);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
+function hideTypingIndicator() {
+    const typingIndicator = document.getElementById('typingIndicator');
+    if (typingIndicator) {
+        typingIndicator.remove();
     }
 }
 
@@ -283,6 +319,9 @@ async function sendMessage() {
     addMessage('user', message);
     input.value = '';
     
+    // Show typing indicator
+    showTypingIndicator();
+    
     try {
         const response = await fetch(`${API_BASE}/game/message`, {
             method: 'POST',
@@ -292,10 +331,13 @@ async function sendMessage() {
             },
             body: JSON.stringify({
                 message: message,
-                model: 'gpt-4o-mini',
+                model: 'gpt-5',
                 use_fast_model: document.getElementById('fastModel').checked
             })
         });
+        
+        // Hide typing indicator before showing response
+        hideTypingIndicator();
         
         const data = await response.json();
         if (response.ok) {
@@ -311,6 +353,7 @@ async function sendMessage() {
             }
         }
     } catch (error) {
+        hideTypingIndicator();
         addMessage('assistant', 'Error: ' + error.message, 'error');
     }
 }
@@ -482,7 +525,7 @@ async function generateSummary() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'gpt-4o-mini',
+                model: 'gpt-4o',
                 problem_type: currentGameState.problemType
             })
         });

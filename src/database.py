@@ -5,8 +5,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 
-from messages import Transcript
-from analyze import _message_from_dict
+from messages import Transcript, message_from_dict
 
 
 DB_FILE = Path(__file__).parent.parent / "data" / "chat_history.db"
@@ -178,7 +177,7 @@ def get_transcript_by_id(transcript_id: int, user_id: Optional[int] = None) -> O
             transcript_data = dict(row)
             # Also deserialize the transcript content into a Transcript object
             transcript_json = json.loads(transcript_data['transcript'])
-            messages = [_message_from_dict(msg) for msg in transcript_json]
+            messages = [message_from_dict(msg) for msg in transcript_json]
             transcript_data['transcript_obj'] = Transcript(messages)
             # Deserialize scores if present
             raw_scores = transcript_data.get("scores")

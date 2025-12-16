@@ -47,3 +47,16 @@ class Transcript:
 
     def serialize(self) -> List[Dict[str, str]]:
         return [message.serialize() for message in self.messages]
+
+
+def message_from_dict(entry: dict) -> BaseMessage:
+    """Convert a serialized message dict back into a message object."""
+    speaker = entry.get("speaker", "")
+    content = entry.get("content", "")
+
+    if speaker == "human":
+        return HumanMessage(content)
+    if speaker == "ai":
+        return AIMessage(content)
+    # Fallback – preserve unknown speakers
+    return BaseMessage(speaker=speaker or "unknown", content=content)

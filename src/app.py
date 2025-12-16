@@ -5,15 +5,10 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
 
-from game import GameState, get_llm_response, check_answer
+from game import GameState, tutor_turn, validator_turn, analyst_turn
 from environments import EnvironmentFactory, ProblemType
 from messages import HumanMessage, AIMessage
 from llm import LLMException
-from analyze import (
-    summarize_problem_solving,
-    get_tutor_insights,
-    generate_likert_scores,
-)
 from database import (
     initialize_database, save_transcript, get_user_sessions, 
     get_all_sessions_for_admin, get_transcript_by_id,
@@ -187,8 +182,8 @@ def send_message():
     human_msg = HumanMessage(user_message)
     game_state.add_to_transcript(human_msg)
     
-    # Check if this is an answer attempt
-    answer_check = check_answer(game_state, user_message)
+    # Validator turn: Check if this is an answer attempt
+    answer_check = validator_turn(game_state, user_message)
     
     response_messages = []
     game_completed = False
@@ -212,11 +207,11 @@ def send_message():
     # Get LLM response (unless game is completed and we got congratulations)
     if not (game_completed and answer_check and answer_check[0]):
         try:
-            model = data.get('model', 'gpt-4o-mini')
+            model = data.get('model', 'gpt-5')
             use_fast_model = data.get('use_fast_model', False)
             model_to_use = 'gpt-4o' if use_fast_model else model
             
-            ai_message = get_llm_response(human_msg, game_state, model=model_to_use)
+            ai_message = tutor_turn(human_msg, game_state, model=model_to_use)
             game_state.add_to_transcript(ai_message)
             
             content = ai_message.content
@@ -257,13 +252,10 @@ def generate_summary():
     transcript = game_state.get_transcript()
     
     try:
-        model = request.json.get('model', 'gpt-4o-mini')
+        model = request.json.get('model', 'gpt-5')
         
-        # Generate scores once
-        scores = generate_likert_scores(transcript, model=model)
-        
-        # Generate summary with those scores
-        summary = summarize_problem_solving(transcript, model=model, scores=scores)
+        # Analyst turn: Generate summary and scores
+        summary, scores = analyst_turn(game_state, model=model)
         
         # Save to database
         user_id = session['user_id']

@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 # Import and run Flask app
-from app_flask import app
+from app import app
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 7860))

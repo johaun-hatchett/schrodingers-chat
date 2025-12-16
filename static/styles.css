@@ -544,6 +544,56 @@ body {
     border-left: 3px solid var(--gray-700);
 }
 
+/* Typing indicator */
+.typing-indicator {
+    display: flex;
+    gap: 12px;
+    max-width: 75%;
+    align-self: flex-start;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.typing-indicator .message-content {
+    background: var(--gray-100);
+    border-radius: 18px 18px 18px 4px;
+    border: 1px solid var(--gray-200);
+    padding: 14px 18px;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gray-500);
+    animation: typingBounce 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0s;
+}
+
+@keyframes typingBounce {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.7;
+    }
+    30% {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+}
+
 .chat-input-container {
     display: flex;
     gap: 12px;

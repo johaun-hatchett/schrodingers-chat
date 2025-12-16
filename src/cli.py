@@ -2,7 +2,7 @@
 from environments import EnvironmentFactory, ProblemType
 from llm import LLMException
 from messages import HumanMessage, AIMessage
-from game import GameState, get_llm_response, check_answer
+from game import GameState, tutor_turn, validator_turn
 
 
 def main():
@@ -26,8 +26,8 @@ def main():
             print("\033[93mTranscript saved to transcript.json\x1b[0m")
             break
 
-        # Check if the user provided a numeric answer
-        answer_check = check_answer(game_state, human_message.content)
+        # Validator turn: Check if the user provided a numeric answer
+        answer_check = validator_turn(game_state, human_message.content)
         
         if answer_check is not None:
             is_correct, feedback = answer_check
@@ -36,7 +36,7 @@ def main():
                 print(f"\n\x1b[32m🎉 {feedback}\x1b[0m")
                 # Still get LLM response for additional feedback
                 try:
-                    ai_message = get_llm_response(human_message, game_state, model="gpt-4o-mini")
+                    ai_message = tutor_turn(human_message, game_state, model="gpt-4o-mini")
                     content = ai_message.content if hasattr(ai_message, "content") else str(ai_message)
                     if content and "Congratulations" not in content:
                         print(f"\n\x1b[34m{content}\x1b[0m")
@@ -54,7 +54,7 @@ def main():
                 print(f"\n\x1b[33m{feedback}\x1b[0m")
                 # Still get LLM response for guidance
                 try:
-                    ai_message = get_llm_response(human_message, game_state, model="gpt-4o-mini")
+                    ai_message = tutor_turn(human_message, game_state, model="gpt-4o-mini")
                     content = ai_message.content if hasattr(ai_message, "content") else str(ai_message)
                     if content:
                         print(f"\n\x1b[34m{content}\x1b[0m")
@@ -64,7 +64,7 @@ def main():
         else:
             # No numeric answer detected, proceed with normal LLM response
             try:
-                ai_message = get_llm_response(human_message, game_state, model="gpt-4o-mini")
+                ai_message = tutor_turn(human_message, game_state, model="gpt-4o-mini")
                 content = ai_message.content if hasattr(ai_message, "content") else str(ai_message)
 
                 # Legacy check for LLM saying congratulations (backup)

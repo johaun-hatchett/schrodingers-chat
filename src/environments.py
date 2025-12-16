@@ -104,10 +104,15 @@ class BlockOnInclineEnvironment(BaseEnvironment):
         }
     
     def get_parameters(self) -> Dict[str, Any]:
+        """
+        Return environment parameters that are observable to the student.
+
+        Intentionally *exclude* the true coefficient of static friction so that
+        the gamemaster LLM does not have access to the correct answer.
+        """
         return {
             "mass": self.mass,
             "incline_angle": self.incline_angle,
-            "coeff_static_friction": self.coeff_static_friction,
             "gravity": self.gravity,
         }
     
@@ -162,12 +167,17 @@ class PendulumEnvironment(BaseEnvironment):
         }
     
     def get_parameters(self) -> Dict[str, Any]:
+        """
+        Return environment parameters that are observable to the student.
+
+        Intentionally *exclude* the true period so that the gamemaster LLM
+        does not have direct access to the correct numeric answer.
+        """
         return {
             "length": self.length,
             "mass": self.mass,
             "initial_angle": self.initial_angle,
             "gravity": self.gravity,
-            "period": round(self.period, 3),
         }
     
     def validate_answer(self, answer: Any) -> Tuple[bool, str]:
@@ -232,14 +242,18 @@ class ProjectileMotionEnvironment(BaseEnvironment):
         }
     
     def get_parameters(self) -> Dict[str, Any]:
+        """
+        Return environment parameters that are observable to the student.
+
+        Intentionally *exclude* derived quantities like range, maximum height,
+        and time of flight so that the gamemaster LLM does not see the
+        correct numeric answers.
+        """
         return {
             "initial_velocity": self.initial_velocity,
             "launch_angle": self.launch_angle,
             "initial_height": self.initial_height,
             "gravity": self.gravity,
-            "range": round(self.range, 2),
-            "max_height": round(self.max_height, 2),
-            "time_of_flight": round(self.time_of_flight, 2),
         }
     
     def validate_answer(self, answer: Any) -> Tuple[bool, str]:
@@ -300,12 +314,17 @@ class RocketEquationEnvironment(BaseEnvironment):
         }
     
     def get_parameters(self) -> Dict[str, Any]:
+        """
+        Return environment parameters that are observable to the student.
+
+        Intentionally *exclude* the resulting delta-v so that the gamemaster
+        LLM remains blind to the correct answer.
+        """
         return {
             "initial_mass": self.initial_mass,
             "final_mass": self.final_mass,
             "fuel_mass": self.fuel_mass,
             "exhaust_velocity": self.exhaust_velocity,
-            "delta_v": round(self.delta_v, 2),
         }
     
     def validate_answer(self, answer: Any) -> Tuple[bool, str]:
